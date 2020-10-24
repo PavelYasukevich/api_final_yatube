@@ -7,7 +7,7 @@ from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
 )
 
-from .models import Comment, Follow, Group, Post
+from .models import Follow, Group, Post
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (
     CommentSerializer,
