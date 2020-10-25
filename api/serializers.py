@@ -8,10 +8,7 @@ User = get_user_model()
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field="username"
-    )
+    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
 
     class Meta:
         fields = "__all__"
@@ -27,7 +24,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = Comment
-        read_only_fields = ['post']
+        read_only_fields = ["post"]
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -43,12 +40,11 @@ class FollowSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     following = serializers.SlugRelatedField(
-        queryset=User.objects.all(),
-        slug_field="username"
+        queryset=User.objects.all(), slug_field="username"
     )
 
     def validate(self, data):
-        if data['following'] == self.context['request'].user:
+        if data["following"] == self.context["request"].user:
             raise serializers.ValidationError("Cannot follow yourself!")
         return data
 
@@ -57,7 +53,6 @@ class FollowSerializer(serializers.ModelSerializer):
         model = Follow
         validators = [
             UniqueTogetherValidator(
-                queryset=Follow.objects.all(),
-                fields=['user', 'following']
+                queryset=Follow.objects.all(), fields=["user", "following"]
             )
         ]
